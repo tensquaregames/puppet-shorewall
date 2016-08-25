@@ -6,6 +6,8 @@ define shorewall::rule (
     $port          = '',
     $sport         = '',
     $original_dest = '',
+    $rate          = '',
+    $user          = '',
     $source,
     $dest,
     $action,
@@ -23,6 +25,12 @@ define shorewall::rule (
     }
     if $original_dest != '' {
         validate_re($sport, '[^\s]+')
+    }
+    if $rate != '' {
+      validate_re($rate, '^-$', '[\w\:\/]+\,*')
+    }
+    if $user != '' {
+        validate_re($user, '\w+')
     }
 
     if $ipv4 {
